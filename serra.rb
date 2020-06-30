@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'csv'
+require 'set'
 
 #NB - tides and waves have been singularized and layering and felting have
 #   been changed to the infinitive
@@ -14,7 +15,7 @@ class Graph
   def self.read_from_file(path)
     csv = CSV.read(path)
     adj_list = Hash[csv.map { |line| [line.first, line[1..-1]] } ]
-    words = csv.map { |line| line.first }
+    words = csv.flatten.to_set
     return Graph.new(words, adj_list)
   end
 
@@ -48,7 +49,6 @@ def check_if_verb(cur_word, path)
 end
 
 def iter_BFS(graph, root)
-  #TODO discovered won't have values for words that aren't keys? - they'll always return nil aka false
   discovered = Hash[graph.words.map { |x| [x, false] } ]
   queue_of_paths = [[root]]
   while not $tmp_verbs.empty? and not queue_of_paths.empty?
