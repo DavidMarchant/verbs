@@ -7,7 +7,7 @@ require 'set'
 #   been changed to the infinitive
 VERBS = ['roll', 'crease', 'fold', 'store', 'bend', 'shorten', 'twist', 'dapple', 'crumple', 'shave', 'tear', 'chip', 'split', 'cut', 'sever', 'drop', 'remove', 'simplify', 'differ', 'disarrange', 'open', 'mix', 'splash', 'knot', 'spill', 'droop', 'flow', 'curve', 'lift', 'inlay', 'impress', 'fire', 'flood', 'smear', 'rotate', 'swirl', 'support', 'hook', 'suspend', 'spread', 'hang', 'collect', 'tension', 'gravity', 'entropy', 'nature', 'grouping', 'layer', 'felt', 'grasp', 'tighten', 'bundle', 'heap', 'gather', 'scatter', 'arrange', 'repair', 'discard', 'pair', 'distribute', 'surfeit', 'compliment', 'enclose', 'surround', 'encircle', 'hole', 'cover', 'wrap', 'dig', 'tie', 'bind', 'weave', 'join', 'match', 'laminate', 'bond', 'hinge', 'mark', 'expand', 'dilute', 'light', 'modulate', 'distill', 'wave', 'electromagnetic', 'inertia', 'ionization', 'polarization', 'refraction', 'tide', 'reflection', 'equilibrium', 'symmetry', 'friction', 'stretch', 'bounce', 'erase', 'spray', 'systematize', 'refer', 'force', 'mapping', 'location', 'context', 'time', 'carbonization', 'continue']
 
-tmp_verbs = VERBS.clone
+INPUT = 'words.csv.1st'
 
 class Graph
   attr_reader :words, :adj_list
@@ -24,19 +24,6 @@ class Graph
     @adj_list = adj_list
   end
 end
-
-print('Loading verbs.... ')
-graph = Graph.read_from_file('words.csv.2nd')
-puts('done')
-
-puts VERBS.join(', ')
-print('Choose your verb: ')
-root = gets.strip
-while not VERBS.include?(root)
-  print("Verb '#{root.strip}' not in list, choose your verb: ")
-  root = gets.strip
-end
-puts
 
 def check_if_verb(cur_word, path, tmp_verbs)
   if tmp_verbs.include?(cur_word)
@@ -63,12 +50,27 @@ def iter_BFS(graph, tmp_verbs, root)
           queue_of_paths.push(new_path)
         end
       end
-    else
-      next
     end
   end
 end
 
+tmp_verbs = VERBS.clone
+
+print('Loading verbs.... ')
+graph = Graph.read_from_file(INPUT)
+puts('done')
+
+puts VERBS.join(', ')
+print('Choose your verb: ')
+root = gets.strip
+while not VERBS.include?(root)
+  print("Verb '#{root.strip}' not in list, choose your verb: ")
+  root = gets.strip
+end
+puts
+
 iter_BFS(graph, tmp_verbs, root)
 
-puts "#{tmp_verbs.length} verbs not found: #{tmp_verbs.join(', ')}"
+unless tmp_verbs.empty?
+  puts "#{tmp_verbs.length} verbs not found: #{tmp_verbs.join(', ')}"
+end
