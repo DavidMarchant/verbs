@@ -7,7 +7,7 @@ require 'set'
 #   been changed to the infinitive
 VERBS = ['roll', 'crease', 'fold', 'store', 'bend', 'shorten', 'twist', 'dapple', 'crumple', 'shave', 'tear', 'chip', 'split', 'cut', 'sever', 'drop', 'remove', 'simplify', 'differ', 'disarrange', 'open', 'mix', 'splash', 'knot', 'spill', 'droop', 'flow', 'curve', 'lift', 'inlay', 'impress', 'fire', 'flood', 'smear', 'rotate', 'swirl', 'support', 'hook', 'suspend', 'spread', 'hang', 'collect', 'tension', 'gravity', 'entropy', 'nature', 'grouping', 'layer', 'felt', 'grasp', 'tighten', 'bundle', 'heap', 'gather', 'scatter', 'arrange', 'repair', 'discard', 'pair', 'distribute', 'surfeit', 'compliment', 'enclose', 'surround', 'encircle', 'hole', 'cover', 'wrap', 'dig', 'tie', 'bind', 'weave', 'join', 'match', 'laminate', 'bond', 'hinge', 'mark', 'expand', 'dilute', 'light', 'modulate', 'distill', 'wave', 'electromagnetic', 'inertia', 'ionization', 'polarization', 'refraction', 'tide', 'reflection', 'equilibrium', 'symmetry', 'friction', 'stretch', 'bounce', 'erase', 'spray', 'systematize', 'refer', 'force', 'mapping', 'location', 'context', 'time', 'carbonization', 'continue']
 
-$tmp_verbs = VERBS.clone
+tmp_verbs = VERBS.clone
 
 class Graph
   attr_reader :words, :adj_list
@@ -38,23 +38,22 @@ while not VERBS.include?(root)
 end
 puts
 
-def check_if_verb(cur_word, path)
-  if $tmp_verbs.include?(cur_word)
+def check_if_verb(cur_word, path, tmp_verbs)
+  if tmp_verbs.include?(cur_word)
     puts (cur_word + ": ")
     puts path.join(' --> ')
-    #puts ("no. of words remaining: #{$words.length} - no. of targets remaning: #{$tmp_verbs.length}")
     puts
-    $tmp_verbs.delete(cur_word)
+    tmp_verbs.delete(cur_word)
   end
 end
 
-def iter_BFS(graph, root)
+def iter_BFS(graph, tmp_verbs, root)
   discovered = Hash[graph.words.map { |x| [x, false] } ]
   queue_of_paths = [[root]]
-  while not $tmp_verbs.empty? and not queue_of_paths.empty?
+  while not tmp_verbs.empty? and not queue_of_paths.empty?
     cur_path = queue_of_paths.shift
     cur_word = cur_path[-1]
-    check_if_verb(cur_word, cur_path)
+    check_if_verb(cur_word, cur_path, tmp_verbs)
     if graph.adj_list[cur_word]
       graph.adj_list[cur_word].each do |dest|
         unless discovered[dest]
@@ -70,6 +69,6 @@ def iter_BFS(graph, root)
   end
 end
 
-iter_BFS(graph, root)
+iter_BFS(graph, tmp_verbs, root)
 
-puts "#{$tmp_verbs.length} verbs not found: #{$tmp_verbs.join(', ')}"
+puts "#{tmp_verbs.length} verbs not found: #{tmp_verbs.join(', ')}"
