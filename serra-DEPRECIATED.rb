@@ -31,7 +31,7 @@ end
 tmp_verbs = VERBS.clone
 
 print('Loading words.... ')
-words = CSV.read('words.csv.2nd.collapsed')
+words = CSV.read('words-WordNet.csv')
 puts('done')
 
 puts VERBS.join(', ')

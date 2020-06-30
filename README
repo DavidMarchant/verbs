@@ -1,0 +1,18 @@
+Inspired by the art piece "Verb List" by Richard Serra, this program generates paths of synonyms between words. I wanted to see how the words of the list related to one another, the chains are surprisingly short.
+
+There are two sets of words in the correct format supplied (words-WordNet.csv and words-Moby.csv) & either's good. They're both just CSV with the first element of each line being the "root" word. Fair warning, this doesn't work properly with input files with more than one entry per root.
+
+There's another version - serra-DEPRECIATED.rb - that DOES work except:
+  - it uses DFS so the paths it generates are extremely long.
+  - it's recursive & QUICKLY reaches Ruby's stack frame limit & crashes out. So it doesn't work.
+The other version models the connections as a graph & uses BFS.
+
+It's pretty fast, max O(n) input thesaurus with n entries.
+
+LICENSES
+
+words-WordNet.csv is sourced from the WordNet Dictionary. Specifically: https://github.com/airshipcloud/dictionary-seed/ and more specifically: https://raw.githubusercontent.com/airshipcloud/dictionary-seed/master/wordnet/Thesaurus/Thesaurus_a-z.csv. It is distributed under the license in WordNet-license.txt.
+
+words-Moby.csv is sourced from the Moby Thesaurus. Specifically: https://github.com/words/moby and more specifically: https://raw.githubusercontent.com/words/moby/master/words.txt. It is distributed under the license in Moby-license.txt.
+
+Both are licensed for modification and redistribution.

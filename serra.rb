@@ -3,11 +3,11 @@
 require 'csv'
 require 'set'
 
-#NB - tides and waves have been singularized and layering and felting have
-#   been changed to the infinitive
+#NB - 'tides' and 'waves' have been singularized and 'layering' and 'felting'
+#   have been changed to the infinitive
 VERBS = ['roll', 'crease', 'fold', 'store', 'bend', 'shorten', 'twist', 'dapple', 'crumple', 'shave', 'tear', 'chip', 'split', 'cut', 'sever', 'drop', 'remove', 'simplify', 'differ', 'disarrange', 'open', 'mix', 'splash', 'knot', 'spill', 'droop', 'flow', 'curve', 'lift', 'inlay', 'impress', 'fire', 'flood', 'smear', 'rotate', 'swirl', 'support', 'hook', 'suspend', 'spread', 'hang', 'collect', 'tension', 'gravity', 'entropy', 'nature', 'grouping', 'layer', 'felt', 'grasp', 'tighten', 'bundle', 'heap', 'gather', 'scatter', 'arrange', 'repair', 'discard', 'pair', 'distribute', 'surfeit', 'compliment', 'enclose', 'surround', 'encircle', 'hole', 'cover', 'wrap', 'dig', 'tie', 'bind', 'weave', 'join', 'match', 'laminate', 'bond', 'hinge', 'mark', 'expand', 'dilute', 'light', 'modulate', 'distill', 'wave', 'electromagnetic', 'inertia', 'ionization', 'polarization', 'refraction', 'tide', 'reflection', 'equilibrium', 'symmetry', 'friction', 'stretch', 'bounce', 'erase', 'spray', 'systematize', 'refer', 'force', 'mapping', 'location', 'context', 'time', 'carbonization', 'continue']
 
-INPUT = 'words.csv.1st'
+INPUT = 'words-Moby.csv'
 
 class Graph
   attr_reader :words, :adj_list
